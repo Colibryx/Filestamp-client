@@ -1,16 +1,34 @@
-# Tauri + Vue 3 + TypeScript
+# Filestamp Official Client
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+The Filestamp Official Client is a tool that allows you to decrypt crypted files uploaded on the blockchain using the Filestamp web application. It provides a certificate of timestamping that indicates when the file was created.
 
-## Recommended IDE Setup
+This client is written in Tauri and comes with pre-compiled executables that can be downloaded from the GitHub releases page. The client is open source to provide transparency to the user.
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+## What is filestamp?
+Filestamp is a cutting-edge web application that enables you to timestamp your valuable files on the blockchain, providing a secure certificate of timestamping that verifies the precise moment your file was created. This certificate is a PDF document that includes critical information such as the password to decrypt the file, the ID of the NFT associated with the uploaded file, and the file link. To ensure maximum security, the file is encrypted using AES-256-CBC algorithm, and the password is the hash of the file. The file is then uploaded on the IPFS network, and the hash of the file is stored on the blockchain. Finally, the NFT is minted on the Algorand blockchain, providing an additional layer of protection for your valuable files. Learn more about Filestamp on our [website](https://filestamp.app).
 
-## Type Support For `.vue` Imports in TS
+## Features
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
+- Decrypt AES-256-CBC Encrypted files.
 
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
+## Installation
 
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+To install the Filestamp Official Client, follow these steps:
+
+1. Go to the [GitHub releases page](https://github.com/filestamp/filestamp-official-client/releases).
+2. Download the appropriate executable for your platform.
+3. Run the executable.
+
+## Usage
+1. Open the client.
+2. Select the file you want to decrypt.
+3. Insert the passphrase given in your pdf certificate.
+4. Click on the "Decrypt" button.
+
+## License
+
+The official client is open source under the [GPL3 License](LICENSE).
+
+## Credits
+
+Filestamp is proudly developed by [Colibryx](https://colibryx.com).

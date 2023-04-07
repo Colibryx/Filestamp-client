@@ -1,13 +1,21 @@
 <script lang="ts">
 import { open as DialogOpen } from '@tauri-apps/api/dialog';
 import { readBinaryFile, writeBinaryFile } from '@tauri-apps/api/fs';
-// import { randomBytes, createCipheriv, createDecipheriv } from "crypto";
-// import { Buffer } from "buffer"
+import algosdk from 'algosdk';
 import { AES, Random } from "@nfen/webcrypto-ts";
+
+const algodToken = '';
+const algodClientServer = 'https://node.algoexplorerapi.io';
+const algodIndexServer = 'https://algoindexer.algoexplorerapi.io/';
+const algodPort = 443;
+const algodIndexer = new algosdk.Indexer(algodToken, algodIndexServer, algodPort);
+
 
 export default {
     data: function () {
         return {
+            asaId: 0,
+            folderPath: "/tmp",
             filePath: "",
             password: "",
             option: "decrypt",
@@ -15,11 +23,24 @@ export default {
     },
     methods: {
         getFile: async function () {
-            console.log("choosing file");
-            const file = await DialogOpen({
+            console.log("getting file");
+            const response = await algodIndexer.lookupAssetByID(this.asaId).do();
+            console.log(response);
+            const result = await fetch(response.asset.params.url);
+            const json = await result.json();
+            //get file from url and save it
+            const file = await (await fetch(json.properties.fileUrl)).arrayBuffer();
+            this.filePath = json.properties.fileName;
+            return file;
+        },
+        getFolder: async function () {
+            const response = await DialogOpen({
+                directory: true,
                 multiple: false,
             });
-            this.filePath = <string>file;
+            if (response) {
+                this.folderPath = <string>response;
+            }
         },
         // generateKey: async function () {
         //     const key = await AES.AES_CBC.generateKey();
@@ -31,6 +52,8 @@ export default {
         //     // this.password = (await AES.AES_CBC.exportKey("raw", key)).toString();
         // },
         startOperation: async function () {
+
+            const file = await this.getFile();
             console.log(this.password);
             console.log(this.option);
             if (this.password == "") {
@@ -56,9 +79,7 @@ export default {
             // }
             else if (this.option == "decrypt") {
                 try {
-
                     console.log("decrypting");
-                    const file = await readBinaryFile(this.filePath);
                     const keyArray = new Uint8Array(this.password.match(/[\da-f]{2}/gi)!.map((h) => parseInt(h, 16)));
                     const iv = file.slice(0, 16);
                     const encrypted = file.slice(16);
@@ -66,9 +87,7 @@ export default {
                     console.log("key", key);
                     const decrypted = await AES.AES_CBC.decrypt({ iv }, key, encrypted);
                     console.log("decrypted", decrypted);
-                    const path = this.filePath.split(".");
-                    const newPath = `${path[0]}_dec.${path[1]}`;
-                    await writeBinaryFile(newPath, decrypted);
+                    await writeBinaryFile(`${this.folderPath}/${this.filePath}`, decrypted);
                 } catch (error) {
                     console.log(error);
                 }
@@ -95,17 +114,22 @@ export default {
 
 <template>
     <!-- <div class="row"> -->
-    <button type="button" v-on:click="getFile">Select a file</button>
+    <p>assetID</p>
+    <input type="number" id="asaId" v-model="asaId" />
     <br />
+    <p>key passphrase</p>
     <input type="text" id="password" v-model="password" />
     <!-- <button type="button" v-on:click="generateKey">Generate key</button> -->
     <br />
     <!-- OPTION LIST ENCRYPT AND DECRYPT -->
+    <p>option</p>
     <select id="option" v-model="option">
         <!-- <option value="encrypt">Encrypt</option> -->
         <option value="decrypt">Decrypt</option>
     </select>
     <br />
+
+    <button id="folder_button" v-on:click="getFolder">Select Folder to save file</button>
     <button id="button" v-on:click="startOperation">Start</button>
     <!-- </div> -->
 </template>

@@ -9,10 +9,10 @@ import FileHandler from './components/FileHandler.vue';
 <template>
   <div class="container">
     <h1>Filestamp official client</h1>
-    <p>choose a file and set encryption or decryption</p>
-    <p>then click the button</p>
-    <p>the file will be encrypted or decrypted</p>
-    <p>and the result will be saved in the same folder</p>
+    <p>Please, insert the assetId and the encryption key from your certificate</p>
+    <p>Choose a folder to save the file inside</p>
+    <p>Click on the decrypt button to start the retrival process</p>
+    <p>If the key is correct you will find your decrypted file inside the selected folder</p>
     <FileHandler/>
     
 <!-- 

@@ -12,6 +12,7 @@
   "dependencies": {
     "@nfen/webcrypto-ts": "^0.0.12",
     "@tauri-apps/api": "^1.2.0",
+    "algosdk": "^2.2.0",
     "vue": "^3.2.45"
   },
   "devDependencies": {

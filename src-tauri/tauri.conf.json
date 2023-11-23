@@ -23,7 +23,9 @@
       },
       "fs": {
         "all": true,
-        "scope": ["**"]
+        "scope": [
+          "**"
+        ]
       },
       "shell": {
         "all": false,
@@ -39,7 +41,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.vero4chain.it",
       "targets": "all"
     },
     "security": {

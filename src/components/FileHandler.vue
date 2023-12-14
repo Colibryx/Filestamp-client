@@ -5,8 +5,8 @@ import algosdk from 'algosdk';
 import { AES, Random } from "@nfen/webcrypto-ts";
 
 const algodToken = '';
-const algodClientServer = 'https://node.algoexplorerapi.io';
-const algodIndexServer = 'https://algoindexer.algoexplorerapi.io/';
+const algodClientServer = 'https://mainnet-api.algonode.cloud';
+const algodIndexServer = 'https://mainnet-idx.algonode.cloud';
 const algodPort = 443;
 const algodIndexer = new algosdk.Indexer(algodToken, algodIndexServer, algodPort);
 
